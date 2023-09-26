@@ -17,6 +17,7 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -40,6 +41,14 @@
     "dist"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/filway/vite-plugin-webp-compress#readme",
+  "repository": {
+    "url": "https://github.com/filway/vite-plugin-webp-compress",
+    "type": "git"
+  },
+  "bugs": {
+    "url": "https://github.com/filway/vite-plugin-webp-compress/issues"
+  },
   "dependencies": {
     "sharp": "^0.32.6"
   },

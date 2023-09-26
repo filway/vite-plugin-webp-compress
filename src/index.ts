@@ -1,8 +1,8 @@
 import { promises as fs } from 'fs'
-import sharp from 'sharp'
 import path from 'path'
+import sharp from 'sharp'
+import type { Alias, Plugin } from 'vite'
 import { REG_GETPATH, REG_MATCHIMG, REG_ONLYIMG, R_OK, W_OK } from './constants'
-import { Plugin, Alias } from 'vite'
 
 function print(msg: string): void {
   process.stdout.write(msg)
@@ -17,9 +17,15 @@ async function fsExists(filePath: string): Promise<boolean> {
   try {
     await fs.access(filePath, R_OK | W_OK)
     return true
-  } catch (error) {
+  }
+  catch (error) {
     return false
   }
+}
+
+// 判断是否为相对路径
+function isRelativePath(path: string): boolean {
+  return path.startsWith('.')
 }
 
 /**
@@ -29,18 +35,18 @@ async function fsExists(filePath: string): Promise<boolean> {
  * @param files
  * @returns
  */
-async function compressImage(files: string[]): Promise<string[]> {
-  let outputs: string[] = []
+async function compressImage(files: string[], root: string): Promise<string[]> {
+  const outputs: string[] = []
   for (const file of files) {
-    const outPath = convertPath(file)
+    const filePath = isRelativePath(file) ? path.resolve(root, file) : file
+    const outPath = convertPath(filePath)
 
     // Do nothing if the webp file already exists.
-    if (await fsExists(outPath)) {
+    if (await fsExists(outPath))
       continue
-    }
 
-    await sharp(file).webp().toFile(outPath)
-    print(`\ncompress: ${file} -> WEBP`)
+    await sharp(filePath).webp().toFile(outPath)
+    print(`\ncompress: ${filePath} -> WEBP`)
     outputs.push(outPath)
   }
 
@@ -53,7 +59,7 @@ async function compressImage(files: string[]): Promise<string[]> {
 
 export default function (): Plugin {
   let alias: Alias[] = []
-  let outputs: string[] = []
+  const outputs: string[] = []
 
   return {
     name: 'vite: webp-compress',
@@ -65,21 +71,23 @@ export default function (): Plugin {
        */
       alias = config.resolve.alias as Alias[]
     },
-    async transform(code: string, _filePath: string) {
+    async transform(code: string, filePath: string) {
       if (code.match(REG_ONLYIMG)) {
-        let files: string[] = []
+        const files: string[] = []
+        const root = path.dirname(filePath)
         const replacedCode = code.replace(REG_MATCHIMG, (key) => {
           files.push(
             alias.reduce((next: string, item: Alias) => {
               return next.match(item.find) ? next.replace(item.find, item.replacement) : next
-            }, key.replace(REG_GETPATH, '')) as string
+            }, key.replace(REG_GETPATH, '')) as string,
           )
           return key.replace(REG_ONLYIMG, '.webp')
         })
 
-        outputs.push(...(await compressImage(files)))
+        outputs.push(...(await compressImage(files, root)))
         return replacedCode
-      } else {
+      }
+      else {
         return code
       }
     },

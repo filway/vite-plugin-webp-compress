@@ -17,7 +17,9 @@
   "main": "dist/src/index.js",
   "scripts": {
     "test": "vitest",
-    "build": "tsc && vite build"
+    "dev:example": "vite dev example",
+    "build:example": "vite build example",
+    "preview:example": "vite preview example"
   },
   "author": "filway <zhouxiaocr@gmail.com>",
   "files": [
@@ -28,10 +30,26 @@
     "sharp": "^0.32.6"
   },
   "devDependencies": {
+    "@mistjs/eslint-config-vue": "^0.1.0",
+    "@mistjs/tsconfig-vue": "^1.1.2",
+    "@types/node": "^20.7.0",
+    "@vitejs/plugin-vue": "^4.3.4",
+    "eslint": "^8.50.0",
+    "lint-staged": "^14.0.1",
+    "simple-git-hooks": "^2.9.0",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
     "vite-plugin-inspect": "^0.7.38",
-    "vitest": "^0.34.5"
+    "vitest": "^0.34.5",
+    "vue": "^3.3.4"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,vue,md}": [
+      "eslint --cache --fix"
+    ]
   }
 }

@@ -23,7 +23,6 @@ async function fsExists(filePath: string): Promise<boolean> {
   }
 }
 
-// 判断是否为相对路径
 function isRelativePath(path: string): boolean {
   return path.startsWith('.')
 }
@@ -57,7 +56,7 @@ async function compressImage(files: string[], root: string): Promise<string[]> {
   return outputs
 }
 
-export default function (): Plugin {
+const VitePluginWebpCompress = (): Plugin => {
   let alias: Alias[] = []
   const outputs: string[] = []
 
@@ -104,3 +103,7 @@ export default function (): Plugin {
     },
   }
 }
+
+export default VitePluginWebpCompress
+
+export { VitePluginWebpCompress }

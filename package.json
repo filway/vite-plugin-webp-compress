@@ -14,12 +14,23 @@
     "frontend",
     "development"
   ],
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json",
+    "./dist/*": "./dist/*"
+  },
   "scripts": {
     "test": "vitest",
     "dev:example": "vite dev example",
     "build:example": "vite build example",
-    "preview:example": "vite preview example"
+    "preview:example": "vite preview example",
+    "build": "tsup"
   },
   "author": "filway <zhouxiaocr@gmail.com>",
   "files": [
@@ -45,7 +56,7 @@
     "vue": "^3.3.4"
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.{js,ts,tsx,vue,md}": [

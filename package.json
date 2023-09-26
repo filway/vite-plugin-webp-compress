@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-webp-compress",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A Vite plugin for compressing and converting images to WebP format during the build process.",
   "keywords": [
     "vite",

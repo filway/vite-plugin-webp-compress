@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "removeComments": true,
+    "sourceMap": false,
+    "target": "es6",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "lib": ["ESNext"],
+    "outDir": "dist",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["**/node_modules"]
+}

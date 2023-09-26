@@ -1,0 +1,37 @@
+{
+  "name": "vite-plugin-webp-compress",
+  "version": "1.0.0",
+  "description": "A Vite plugin for compressing and converting images to WebP format during the build process.",
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "image",
+    "webp",
+    "compression",
+    "optimization",
+    "build",
+    "webpack",
+    "frontend",
+    "development"
+  ],
+  "main": "dist/src/index.js",
+  "scripts": {
+    "test": "vitest",
+    "build": "tsc && vite build"
+  },
+  "author": "filway <zhouxiaocr@gmail.com>",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "sharp": "^0.32.6"
+  },
+  "devDependencies": {
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vite-plugin-inspect": "^0.7.38",
+    "vitest": "^0.34.5"
+  }
+}
